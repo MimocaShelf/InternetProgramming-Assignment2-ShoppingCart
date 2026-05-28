@@ -25,7 +25,7 @@
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     display: none;
-    z-index: 2000;
+    z-index: 900;
     animation: slideIn 0.3s ease-out;
     border-left: 5px solid #8B6F47;
     min-width: 250px;
