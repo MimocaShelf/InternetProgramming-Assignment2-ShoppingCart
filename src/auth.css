@@ -1,0 +1,133 @@
+body.auth-page-active {
+    padding-top: 0 !important;
+    overflow: hidden;
+}
+
+.auth-page {
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #f4ecdf 0%, #cec1ae 100%);
+    padding: 40px 20px;
+}
+
+.auth-panel {
+    width: min(640px, 95%);
+    min-height: 560px;
+    background: rgb(235, 215, 178);
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+    padding: 40px;
+    padding-top: 60px;
+    border: 1px solid #f0e6da;
+}
+
+.auth-heading {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.auth-icon {
+    width: 62px;
+    height: auto;
+}
+
+.auth-heading h1 {
+    margin-bottom: 8px;
+    font-size: 42px;
+    color: #8B6F47;
+}
+
+.auth-heading p {
+    color: #6e5b44;
+    font-size: 18px;
+}
+
+.auth-mode-toggle {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.auth-mode-toggle button {
+    flex: 1;
+    padding: 14px 20px;
+    border-radius: 999px;
+    border: 1px solid #d9c4a8;
+    background: #f9f6f3;
+    color: #8b6f47;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.auth-mode-toggle button.active,
+.auth-mode-toggle button:hover {
+    background-color: #8b6f47;
+    color: white;
+    border-color: #8b6f47;
+}
+
+.auth-form {
+    display: grid;
+    gap: 18px;
+}
+
+.auth-form label {
+    display: grid;
+    gap: 8px;
+    color: #463d33;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 16px 18px;
+    border: 1px solid #d9c4a8;
+    border-radius: 12px;
+    font-size: 18px;
+    outline: none;
+}
+
+.auth-form input:focus {
+    border-color: #8b6f47;
+    box-shadow: 0 0 0 4px rgba(139, 111, 71, 0.12);
+}
+
+.auth-error {
+    color: #c23030;
+    font-size: 14px;
+    margin-top: -8px;
+}
+
+.auth-submit {
+    width: 100%;
+    padding: 18px 20px;
+    border: none;
+    border-radius: 12px;
+    background-color: #8b6f47;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.auth-submit:hover {
+    background-color: #6b4423;
+}
+
+.auth-switch {
+    width: 100%;
+    margin-top: 16px;
+    background: none;
+    border: none;
+    color: #8b6f47;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: underline;
+}

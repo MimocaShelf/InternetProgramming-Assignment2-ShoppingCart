@@ -20,13 +20,19 @@ function Header({ searchTerm, onSearch, cartCount, onToggleCart, cartOpen, user,
             </div>
 
             <div className="header-actions">
+                <div className="header-user">
+                    <span>Hi, {user}</span>
+                    <button className="logout-btn" type="button" onClick={onLogout}>
+                        Logout
+                    </button>
+                </div>
                 <button
                     className="cart-icon"
                     onClick={onToggleCart}
                     aria-label="Open shopping cart"
                     aria-expanded={cartOpen}
                 >
-                    <img src="../photos/cart-icon.png" alt="Shopping cart" className="cart-image" />
+                    <img src="photos/cart-icon.png" alt="Shopping cart" className="cart-image" />
                     <span className="cart-count" id="cartCount" aria-label="Items in cart">
                         {cartCount}
                     </span>

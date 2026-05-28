@@ -37,3 +37,15 @@ function checkoutCart(cart, token) {
         return response.json();
     });
 }
+
+function fetchAdminOrders(token) {
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    return fetch('/api/admin/orders', { headers }).then((response) => {
+        if (!response.ok) {
+            return response.json().then((data) => {
+                throw new Error(data?.error || 'Unable to load admin orders');
+            });
+        }
+        return response.json();
+    });
+}

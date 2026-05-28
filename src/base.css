@@ -24,3 +24,144 @@ body {
     grid-column: 1 / -1;
     padding: 60px 20px;
 }
+
+.admin-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 28px 20px 60px;
+    background-color: #b59e7e;
+}
+
+.admin-page-intro {
+    background-color: #e2d6c2;
+    border: 1px solid rgba(211, 184, 142, 0.35);
+    border-radius: 22px;
+    padding: 28px 30px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    margin-bottom: 30px;
+}
+
+.admin-page-intro h1 {
+    font-size: 2.3rem;
+    color: #3d2e18;
+    margin-bottom: 10px;
+}
+
+.admin-page-intro p {
+    line-height: 1.7;
+    font-size: 1.50rem;
+    color: #6e5a3e;
+    text-align: center;
+}
+
+.admin-orders {
+    display: grid;
+    gap: 24px;
+    margin-top: 20px;
+}
+
+.admin-order {
+    background: #ffffff;
+    border: 1px solid #ece3d6;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.06);
+}
+
+.admin-order-header {
+    display: grid;
+    grid-template-columns: minmax(240px, 1.8fr) auto;
+    gap: 18px;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.admin-order-header div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.admin-user {
+    color: #3f2f20;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.admin-order-id {
+    color: #7f6b53;
+    font-size: 0.95rem;
+}
+
+.admin-date {
+    color: #8a7a61;
+    font-size: 0.95rem;
+}
+
+.admin-total {
+    color: #8b6f47;
+    font-size: 1rem;
+    font-weight: 700;
+    justify-self: end;
+}
+
+.admin-order-table {
+    display: grid;
+    grid-template-columns: 4fr 1fr 1fr 1fr;
+    gap: 16px;
+    align-items: center;
+    width: 100%;
+}
+
+.admin-order-table span {
+    padding: 12px 0;
+    font-size: 0.96rem;
+    color: #59482f;
+}
+
+.admin-order-table > span {
+    font-weight: 700;
+    color: #6d5a43;
+    border-bottom: 1px solid #e8e0d5;
+}
+
+.admin-order-table > .admin-order-cell-name {
+    color: #3f3225;
+}
+
+.admin-order-table > .admin-order-cell-center,
+.admin-order-table > .admin-order-cell-right {
+    text-align: center;
+}
+
+.admin-order-table > .admin-order-cell-right {
+    text-align: right;
+}
+
+.admin-order-table span:nth-child(n + 5) {
+    border-bottom: 1px solid #f1ebe2;
+}
+
+.admin-order-footer {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid #e8e0d5;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.admin-order-footer .admin-total {
+    margin: 0;
+    font-size: 1.04rem;
+    color: #6f5235;
+}
+
+.admin-empty {
+    padding: 40px;
+    background: #fff8f0;
+    border: 1px solid #f1e3d4;
+    border-radius: 20px;
+    color: #7a654a;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}

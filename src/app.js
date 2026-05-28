@@ -1,12 +1,28 @@
 const { useState, useEffect, useMemo } = React;
 
 function App() {
+    const [user, setUser] = useState(() => localStorage.getItem('currentUser') || '');
+    const [authToken, setAuthToken] = useState(() => localStorage.getItem('authToken') || '');
+    const [isAdmin, setIsAdmin] = useState(() => localStorage.getItem('isAdmin') === 'true');
     const [orders, setOrders] = useState([]);
     const [foods, setFoods] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [cart, setCart] = useState([]);
     const [notifications, setNotifications] = useState([]);
     const [cartOpen, setCartOpen] = useState(false);
+
+    useEffect(() => {
+        if (!user || isAdmin) {
+            return;
+        }
+
+        fetchFoods(authToken)
+            .then((data) => setFoods(data))
+            .catch((error) => {
+                console.error('Failed to load food data:', error);
+                setFoods([]);
+            });
+    }, [user, authToken, isAdmin]);
 
     useEffect(() => {
         if (notifications.length === 0) {
@@ -19,6 +35,71 @@ function App() {
 
         return () => clearTimeout(timer);
     }, [notifications]);
+
+    useEffect(() => {
+        if (user) {
+            localStorage.setItem('currentUser', user);
+        } else {
+            localStorage.removeItem('currentUser');
+        }
+    }, [user]);
+
+    useEffect(() => {
+        if (authToken) {
+            localStorage.setItem('authToken', authToken);
+        } else {
+            localStorage.removeItem('authToken');
+        }
+    }, [authToken]);
+
+    useEffect(() => {
+        if (isAdmin) {
+            localStorage.setItem('isAdmin', 'true');
+        } else {
+            localStorage.removeItem('isAdmin');
+        }
+    }, [isAdmin]);
+
+    useEffect(() => {
+        document.body.classList.toggle('auth-page-active', !user);
+        return () => {
+            document.body.classList.remove('auth-page-active');
+        };
+    }, [user]);
+
+    useEffect(() => {
+        if (!isAdmin || !authToken) {
+            setOrders([]);
+            return;
+        }
+
+        fetchAdminOrders(authToken)
+            .then((data) => setOrders(data.orders || []))
+            .catch((error) => {
+                console.error('Failed to load admin orders:', error);
+                setOrders([]);
+            });
+    }, [isAdmin, authToken]);
+
+    const handleLogin = (username, token, admin = false) => {
+        setUser(username);
+        setAuthToken(token || '');
+        setIsAdmin(!!admin);
+        setCart([]);
+        setSearchTerm('');
+        setNotifications([{ id: Date.now(), message: `Welcome back, ${username}!` }]);
+    };
+
+    const handleLogout = () => {
+        setUser('');
+        setAuthToken('');
+        setIsAdmin(false);
+        setOrders([]);
+        setCart([]);
+        setCartOpen(false);
+        setSearchTerm('');
+        setNotifications([]);
+    };
 
     const searchTerms = useMemo(
         () => searchTerm.trim().toLowerCase().split(/\s+/).filter(Boolean),
@@ -128,6 +209,14 @@ function App() {
         }
     };
 
+    if (!user) {
+        return <AuthPage onLogin={handleLogin} />;
+    }
+
+    if (isAdmin) {
+        return <AdminDashboard user={user} onLogout={handleLogout} orders={orders} />;
+    }
+
     return (
         <>
             <Header
@@ -173,6 +262,75 @@ function App() {
             />
 
             <Notifications notifications={notifications} />
+        </>
+    );
+}
+
+function AdminDashboard({ user, onLogout, orders }) {
+    return (
+        <>
+            <header role="banner">
+                <div className="header-brand">
+                    <h2>
+                        <img src="photos/icon.png" alt="Sweet Bakery icon" className="site-icon" /> Sweet Bakery Admin
+                    </h2>
+                </div>
+
+                <div className="header-actions">
+                    <div className="header-user">
+                        <button className="logout-btn" type="button" onClick={onLogout}>
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <div className="admin-page">
+                <div className="admin-page-intro">
+                    <h1>Admin Dashboard</h1>
+                    <p>Welcome back, {user}. Review purchased orders below.</p>
+                </div>
+
+                {orders.length === 0 ? (
+                    <div className="admin-empty">
+                        <p>No purchased carts found yet.</p>
+                    </div>
+                ) : (
+                <div className="admin-orders">
+                    {orders.map((order) => (
+                        <section key={order.orderId} className="admin-order">
+                            <div className="admin-order-header">
+                                <div>
+                                    <span className="admin-user">Customer: {order.username}</span>
+                                    <div className="admin-order-id">Order #{order.orderId}</div>
+                                </div>
+                                <span className="admin-date">{new Date(order.createdAt).toLocaleString()}</span>
+                            </div>
+
+                            <div className="admin-order-table">
+                                <span>Item</span>
+                                <span>Qty</span>
+                                <span>Price</span>
+                                <span>Subtotal</span>
+
+                                {order.items.map((item, index) => (
+                                    <React.Fragment key={`order-row-${order.orderId}-${item.foodId}-${index}`}>
+                                        <span className="admin-order-cell-name">{item.name}</span>
+                                        <span className="admin-order-cell-center">{item.quantity}</span>
+                                        <span className="admin-order-cell-center">${item.price.toFixed(2)}</span>
+                                        <span className="admin-order-cell-right">${(item.price * item.quantity).toFixed(2)}</span>
+                                    </React.Fragment>
+                                ))}
+                            </div>
+
+                            <div className="admin-order-footer">
+                                <span className="admin-total">Total: ${order.total.toFixed(2)}</span>
+                            </div>
+                        </section>
+                    ))}
+                </div>
+            )}
+        </div>
         </>
     );
 }
