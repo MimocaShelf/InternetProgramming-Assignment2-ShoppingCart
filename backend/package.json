@@ -1,0 +1,15 @@
+{
+  "name": "sweet-bakery-backend",
+  "version": "1.0.0",
+  "description": "SQLite backend for Sweet Bakery React frontend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.18.4",
+    "jsonwebtoken": "^9.0.0",
+    "sqlite3": "^5.1.6"
+  }
+}

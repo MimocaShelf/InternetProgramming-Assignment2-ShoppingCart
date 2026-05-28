@@ -5,55 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sweet Bakery</title>
     <link rel="icon" type="image/png" href="photos/icon.png">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="src/base.css">
+    <link rel="stylesheet" href="src/header.css">
+    <link rel="stylesheet" href="src/hero.css">
+    <link rel="stylesheet" href="src/nav.css">
+    <link rel="stylesheet" href="src/products.css">
+    <link rel="stylesheet" href="src/cart.css">
+    <link rel="stylesheet" href="src/notifications.css">
 </head>
 <body>
-    <header role="banner">
-        <div class="header-brand">
-            <h2><img src="photos/icon.png" alt="Sweet Bakery icon" class="site-icon"> Sweet Bakery</h2>
-        </div>
-        <div class="header-search">
-            <input
-                id="productSearch"
-                class="search-input"
-                type="search"
-                placeholder="Search products..."
-                aria-label="Search products"
-                oninput="handleSearchInput(event)"
-            />
-        </div>
-        <button class="cart-icon" onclick="toggleCart()" aria-label="Open shopping cart" aria-expanded="false">
-            <img src="photos/cart-icon.png" alt="Shopping cart" class="cart-image">
-            <span class="cart-count" id="cartCount" aria-label="Items in cart">0</span>
-        </button>
-    </header>
+    <div id="root"></div>
 
-    <div class="hero">
-        <div class="hero-content">
-            <h1>Freshly Baked Delights</h1>
-            <p class="hero-subtitle">Handcrafted pastries and baked goods delivered right to your doorstep!</p>
-        </div>
-    </div>
-
-    <div class="container">
-        <nav class="category-nav" id="categoryNav"></nav>
-        <div class="food-grid" id="foodGrid"></div>
-    </div>
-
-    <div class="overlay" id="overlay" onclick="toggleCart()" aria-hidden="true"></div>
-    <div class="cart-modal" id="cartModal" role="dialog" aria-labelledby="cart-title" aria-hidden="true">
-        <div class="cart-header">
-            <h2 id="cart-title">Shopping Cart</h2>
-            <button class="close-cart" onclick="toggleCart()" aria-label="Close shopping cart">×</button>
-        </div>
-        <div id="cartItems"></div>
-        <div class="cart-total">
-            Total: $<span id="cartTotal">0.00</span>
-        </div>
-        <button class="checkout-btn" onclick="checkout()">Checkout</button>
-    </div>
-
-    <script src="foodDatabase.js"></script>
-    <script src="script.js"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel" src="src/base.js"></script>
+    <script type="text/babel" src="src/header.js"></script>
+    <script type="text/babel" src="src/hero.js"></script>
+    <script type="text/babel" src="src/nav.js"></script>
+    <script type="text/babel" src="src/products.js"></script>
+    <script type="text/babel" src="src/cart.js"></script>
+    <script type="text/babel" src="src/notifications.js"></script>
+    <script type="text/babel" src="src/app.js"></script>
 </body>
 </html>
