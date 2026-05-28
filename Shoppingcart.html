@@ -9,7 +9,19 @@
 </head>
 <body>
     <header role="banner">
-        <h2><img src="photos/icon.png" alt="Sweet Bakery icon" class="site-icon"> Sweet Bakery</h2>
+        <div class="header-brand">
+            <h2><img src="photos/icon.png" alt="Sweet Bakery icon" class="site-icon"> Sweet Bakery</h2>
+        </div>
+        <div class="header-search">
+            <input
+                id="productSearch"
+                class="search-input"
+                type="search"
+                placeholder="Search products..."
+                aria-label="Search products"
+                oninput="handleSearchInput(event)"
+            />
+        </div>
         <button class="cart-icon" onclick="toggleCart()" aria-label="Open shopping cart" aria-expanded="false">
             <img src="photos/cart-icon.png" alt="Shopping cart" class="cart-image">
             <span class="cart-count" id="cartCount" aria-label="Items in cart">0</span>
@@ -41,10 +53,23 @@
         <button class="checkout-btn" onclick="checkout()">Checkout</button>
     </div>
 
+
     <script src="foodDatabase.js"></script>
     <script>
         let cart = [];
         let notificationCount = 0;
+        let currentSearch = '';
+
+        // Search Function
+        function handleSearchInput(event) {
+            currentSearch = event.target.value;
+            displayFoods();
+        }
+
+        function matchesSearchTerms(text, terms) {
+            const words = text.toLowerCase().split(/\s+/).filter(Boolean);
+            return terms.every(term => words.some(word => word.startsWith(term)));
+        }
 
         function showNotification(message) {
             const notificationId = `notification-${Date.now()}`;
@@ -87,10 +112,23 @@
         function displayFoods() {
             const foodGrid = document.getElementById('foodGrid');
             const categoryNav = document.getElementById('categoryNav');
-            
+            const searchTerms = currentSearch.trim().toLowerCase().split(/\s+/).filter(Boolean);
+
+            const filteredFoods = foods.filter(food => {
+                if (searchTerms.length === 0) return true;
+                const combinedText = `${food.name} ${food.category}`;
+                return matchesSearchTerms(combinedText, searchTerms);
+            });
+
+            if (filteredFoods.length === 0) {
+                categoryNav.innerHTML = '';
+                foodGrid.innerHTML = '<p class="no-results">No products found for your search.</p>';
+                return;
+            }
+
             // Group foods by category
             const categories = {};
-            foods.forEach(food => {
+            filteredFoods.forEach(food => {
                 if (!categories[food.category]) {
                     categories[food.category] = [];
                 }
@@ -196,6 +234,7 @@
         function toggleCart() {
             const cartModal = document.getElementById('cartModal');
             const overlay = document.getElementById('overlay');
+            const header = document.querySelector('header');
             const cartIcon = document.querySelector('.cart-icon');
             
             const isActive = cartModal.classList.contains('active');
@@ -204,6 +243,7 @@
                 // Closing cart
                 cartModal.classList.remove('active');
                 overlay.classList.remove('active');
+                header.classList.remove('cart-open');
                 cartIcon.setAttribute('aria-expanded', 'false');
                 cartModal.setAttribute('aria-hidden', 'true');
                 overlay.setAttribute('aria-hidden', 'true');
@@ -219,6 +259,7 @@
                 
                 cartModal.classList.add('active');
                 overlay.classList.add('active');
+                header.classList.add('cart-open');
                 cartIcon.setAttribute('aria-expanded', 'true');
                 cartModal.setAttribute('aria-hidden', 'false');
                 overlay.setAttribute('aria-hidden', 'false');
